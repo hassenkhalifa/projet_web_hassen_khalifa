@@ -1,0 +1,101 @@
+<div>
+    <div>
+      <md-toolbar class="md-transparent">
+        <span class="md-title">Nom </span>
+      </md-toolbar>
+      <p>{{ restaurant.name }}</p>
+    </div>
+    <div>
+      <md-toolbar class="md-transparent">
+        <span class="md-title">Cuisine</span>
+      </md-toolbar>
+      <p>{{ restaurant.cuisine }}</p>
+    </div>
+    <div>
+      <md-toolbar class="md-transparent">
+        <span class="md-title">Adresse</span>
+      </md-toolbar>
+
+      <p>
+        {{ restaurant.address.street }} Batiment :
+        {{ restaurant.address.building }} code postale :
+        {{ restaurant.address.zipcode }}, {{ restaurant.borough }}
+      </p>
+    </div>
+    <div class="list">
+      <md-list :md-expand-single="expandSingle">
+        <md-list-item md-expand :md-expanded.sync="expandNews">
+          <md-icon class="md-size-2x">restaurant_menu</md-icon>
+          <span class="md-display-2">Menu</span>
+
+          <md-list slot="md-expand">
+            <md-list-item class="md-inset">World</md-list-item>
+            <md-list-item class="md-inset">Europe</md-list-item>
+            <md-list-item class="md-inset">South America</md-list-item>
+          </md-list>
+        </md-list-item>
+      </md-list>
+    </div>
+
+    <div class="list">
+      <md-list :md-expand-single="expandSingle2">
+        <md-list-item md-expand :md-expanded.sync="expandNews2">
+          <md-icon class="md-size-2x">grade</md-icon>
+          <span class="md-display-2">Notes</span>
+
+          <md-list slot="md-expand">
+            <md-list-item class="md-inset">
+              <ul id="grades">
+                <li
+                  v-for="(grade, index) in restaurant.grades"
+                  v-bind:key="index"
+                >
+                  {{ grade.date | dateParse('YYYY-MM-DD')  }} - {{ grade.grade }} - {{ grade.score }}
+                </li>
+              </ul>
+            </md-list-item>
+          </md-list>
+        </md-list-item>
+      </md-list>
+    </div>
+
+    "American"
+
+    {
+    "_id": "61497b1c986590e3df40b2f8",
+    "address": {
+        "building": "1",
+        "coord": [
+            -73.96926909999999,
+            40.7685235
+        ],
+        "street": "East   66 Street",
+        "zipcode": "10065"
+    },
+    "borough": "Manhattan",
+    "cuisine": "American",
+    "grades": [
+        {
+            "date": "2014-05-07T00:00:00.000Z",
+            "grade": "A",
+            "score": 3
+        },
+        {
+            "date": "2013-05-03T00:00:00.000Z",
+            "grade": "A",
+            "score": 4
+        },
+        {
+            "date": "2012-04-30T00:00:00.000Z",
+            "grade": "A",
+            "score": 6
+        },
+        {
+            "date": "2011-12-27T00:00:00.000Z",
+            "grade": "A",
+            "score": 0
+        }
+    ],
+    "name": "1 East 66Th Street Kitchen",
+    "restaurant_id": "40359480"
+}

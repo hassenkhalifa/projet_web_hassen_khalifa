@@ -1,0 +1,187 @@
+<div>
+    <md-field>
+      <label>Ecrire ici !</label>
+      <md-input ></md-input>
+      <span class="md-helper-text">Nom du restaurant</span>
+    </md-field>
+    <md-dialog-alert
+      :md-active.sync="alertSearch"
+      md-content="aucun restaurant ne correspond à votre recherche !"
+      md-confirm-text="OK"
+    />
+    <md-table v-model="restaurants" md-sort="name" md-sort-order="asc" md-card>
+      <md-table-toolbar>
+        
+
+        <div class="ajout">
+          <md-button
+            class="md-icon-button md-raised md-primary"
+            @click="menuAjout = true"
+          >
+            <md-icon class="material-icons">add_circle_outline</md-icon>
+          </md-button>
+        </div>
+        
+      </md-table-toolbar>
+      <md-table-row slot="md-table-row" slot-scope="{ item }">
+        <md-table-cell md-label="Nom" md-sort-by="name">{{
+          item.name
+        }}</md-table-cell>
+        <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{
+          item.cuisine
+        }}</md-table-cell>
+
+        <md-table-cell>
+          <md-dialog-alert
+            :md-active.sync="alertsuppr"
+            md-content="Le restaurant est supprimer !"
+            md-confirm-text="OK"
+          />
+          <md-dialog-alert
+            :md-active.sync="alertModif"
+            md-content="Le restaurant a été modifier !"
+            md-confirm-text="OK"
+          />
+          <md-dialog-alert
+            :md-active.sync="alertAjout"
+            md-content="Le restaurant a été ajouté !"
+            md-confirm-text="OK"
+          />
+
+          <md-button
+            class="md-icon-button md-raised md-accent"
+            @click="
+              supprimerRestaurant(item);
+              alertsuppr = true;
+            "
+          >
+            <md-icon class="material-icons">delete_forever</md-icon>
+          </md-button>
+
+          <md-dialog :md-active.sync="menumodif">
+            <md-dialog-title>Modifier le restaurant</md-dialog-title>
+            <md-field>
+              <label>Nom du restaurant</label>
+              <md-input v-model="nom" required="required"></md-input>
+            </md-field>
+            <md-field>
+              <label>Cuisine du restaurant</label>
+              <md-input v-model="cuisine" required="required"></md-input>
+            </md-field>
+
+            <md-dialog-actions>
+              <md-button class="md-primary" @click="menumodif = false"
+                >Fermer</md-button
+              >
+
+              <md-button
+                class="md-primary"
+                @click="
+                  menumodif = false;
+                  alertModif = true;
+                  modifierRestaurant(item);
+                "
+                >Modifier</md-button
+              >
+            </md-dialog-actions>
+          </md-dialog>
+          <md-dialog :md-active.sync="menuAjout">
+            <md-dialog-title>Ajouter un restaurant</md-dialog-title>
+            <md-field>
+              <label>Nom du restaurant</label>
+              <md-input v-model="nom" required="required"></md-input>
+            </md-field>
+            <md-field>
+              <label>Cuisine du restaurant</label>
+              <md-input v-model="cuisine" required="required"></md-input>
+            </md-field>
+
+            <md-dialog-actions>
+              <md-button class="md-primary" @click="menuAjout = false"
+                >Fermer</md-button
+              >
+
+              <md-button
+                class="md-primary"
+                @click="
+                  menuAjout = false;
+                  alertAjout = true;
+                  ajouterrRestaurant();
+                "
+              >
+                Ajouter</md-button
+              >
+            </md-dialog-actions>
+          </md-dialog>
+          <md-button
+            class="md-icon-button md-raised md-primary"
+            @click="menumodif = true"
+          >
+            <md-icon class="material-icons">edit</md-icon>
+          </md-button>
+          <md-button class="md-icon-button md-raised" to="/details">
+            <md-icon>read_more</md-icon>
+          </md-button>
+        </md-table-cell>
+      </md-table-row>
+    </md-table>
+  </div>
+
+  <div>
+    <md-table
+      v-model="restaurants"
+      md-sort="name"
+      md-sort-order="asc"
+      md-card
+      md-fixed-header
+    >
+    
+      <md-table-toolbar>
+        <div class="md-toolbar-section-end" >
+          <md-button class="md-icon-button md-raised" @click="changeSizeValue(5)">
+          5
+        </md-button>
+        <md-button
+          class="md-icon-button md-raised"
+          @click="changeSizeValue(50)"
+        >
+          50
+        </md-button>
+        <md-button
+          class="md-icon-button md-raised"
+          @click="changeSizeValue(100)"
+        >
+          100
+        </md-button>
+          <md-button @click="pagePrecedente()">
+            <md-icon class="material-icons">chevron_leftt</md-icon>
+          </md-button>
+          <md-button @click="pageSuivante()">
+            <md-icon class="material-icons">chevron_right</md-icon>
+          </md-button>
+        </div>
+        <md-field md-clearable class="md-toolbar-section-start">
+          <md-input
+            placeholder="Recherché par nom"
+            @input="rechercheRestaurant()"
+            v-model="name"
+          />
+        </md-field>
+        
+      </md-table-toolbar>
+
+      <md-table-empty-state
+        md-label="Aucun restaurant ne correspond à votre recherche"
+      >
+      </md-table-empty-state>
+
+      <md-table-row slot="md-table-row" slot-scope="{ item }">
+        <md-table-cell md-label="Nom" md-sort-by="name">{{
+          item.name
+        }}</md-table-cell>
+        <md-table-cell md-label="Cuisine" md-sort-by="cuisine">{{
+          item.cuisine
+        }}</md-table-cell>
+      </md-table-row>
+    </md-table>
+  </div>
